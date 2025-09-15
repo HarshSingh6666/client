@@ -1,0 +1,18 @@
+.chatbot-full-page {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+  padding: 20px;
+}
+
+.chatbot-full-page .chatbot-container {
+  width: 100%;
+  max-width: 700px;
+  height: 90vh;
+  border-radius: 16px;
+  box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}

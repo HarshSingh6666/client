@@ -1,0 +1,64 @@
+.about {
+  padding: 60px 20px;
+  background: #f9fbe7; /* light farming theme background */
+  font-family: "Poppins", sans-serif;
+}
+
+.about-container {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+/* Image Styling */
+.about-image img {
+  height:500px;
+  width: 400px;
+  border-radius: 20px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.2);
+  transition: transform 0.4s ease;
+}
+
+.about-image img:hover {
+  transform: scale(1.05);
+}
+
+/* Content Styling */
+.about-content h2 {
+  font-size: 2.5rem;
+  color: #2e7d32; /* dark green */
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.about-content h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: #cddc39; /* lime green */
+  margin-top: 8px;
+  border-radius: 2px;
+}
+
+.about-content p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: #4e4e4e;
+  margin-bottom: 15px;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .about-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .about-content h2::after {
+    margin: 8px auto;
+  }
+}

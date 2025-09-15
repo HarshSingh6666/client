@@ -1,0 +1,69 @@
+.footer {
+  background: linear-gradient(135deg, #ffcc80, #8bc34a, #4e342e);
+  /* warm orange → fresh green → earthy brown */
+  color: #fff;
+  padding: 40px 20px 10px 20px;
+  font-family: "Poppins", sans-serif;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  margin-bottom: 20px;
+  height:180px;
+}
+
+.footer-section h3 {
+  font-size: 20px;
+  margin:5px 0 0 10px;
+  color: #fff3e0; /* soft orange accent */
+}
+
+.footer-section h4 {
+  margin: 5px 0 0 10px;
+  font-size: 24px;
+  color: #f1f8e9; /* light green text */
+  position: relative;
+  left:230px;
+}
+.contact h4 {
+  margin-bottom: 5px;
+  font-size: 24px;
+  color: #f1f8e9; /* light green text */
+  position: relative;
+  left:200px;
+}
+
+.contact p {
+  margin-bottom:3px;
+}
+
+.links{
+  position: relative;
+  left:250px;
+}
+li{
+  font-size: 25px;
+}
+.footer-section p,
+.footer-section a {
+  font-size: 14px;
+  color: #f9fbe7; /* very light earthy */
+  line-height: 1.6;
+  text-decoration: none;
+}
+
+.footer-section a:hover {
+  text-decoration: underline;
+  color: #ffecb3; /* bright golden on hover */
+}
+
+.footer-bottom {
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  padding-top: 10px;
+  font-size: 13px;
+  color: #f1f8e9;
+  height:30px;
+}

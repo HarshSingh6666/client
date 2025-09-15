@@ -1,0 +1,11 @@
+/* ✅ Hide horizontal scrollbar globally */
+html, body {
+  overflow-x: hidden;
+}
+
+/* ✅ Ensure body takes full width only */
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

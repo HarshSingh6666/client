@@ -1,0 +1,103 @@
+/* Navbar Container */
+.navbar {
+  background: #2e7d32; /* dark green */
+  padding: 0.8rem 1.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  margin-top:0.2rem;
+}
+
+/* Flex layout */
+.nav-container {
+  width:100%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height:2rem;
+}
+
+/* Logo */
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  text-decoration: none;
+}
+
+
+.imagelogo{
+  height:50px;
+  position:relative;
+  top: 0.6rem;
+
+}
+
+.govt{
+  height:6rem;
+  width:20rem;
+  opacity: 0.4;
+  
+}
+.govt:hover{
+  opacity:1;
+}
+.vertical{
+  height:7rem;
+  width:100px;
+}
+
+.top-content{
+  position:absolute;
+  top:-0.1rem;
+  left:400px;
+  font-size: 30px;
+  display: block;
+}
+/* Nav Links */
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-item {
+  color: #e8f5e9; /* light green text */
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  position: relative;
+  transition: 0.3s;
+}
+
+/* Hover & Active */
+.nav-item:hover {
+  color: #c8e6c9; /* lighter shade */
+}
+.nav-item.active {
+  color: #ffffff;
+  font-weight: 600;
+}
+.nav-item.active::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #cddc39; /* yellow-green underline */
+  border-radius: 2px;
+}
+
+
+.language-dropdown{
+  height:35px;
+  width:100%;
+  background-color: rgb(247, 51, 3);
+  color:ghostwhite;
+}
+
+.language-dropdown :hover{
+  background-color:darkgreen;
+}
