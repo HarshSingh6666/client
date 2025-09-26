@@ -9,6 +9,8 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Services from "./pages/Services";
 import Support from "./pages/Support";
+import Login from "./pages/Login";
+import Register from"./pages/Register";
 import ChatbotPage from "./pages/ChatbotPage";
 // Service detail pages
 import Soil from "./pages/services/Soil";
@@ -26,6 +28,9 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
         <Route path="/support" element={<Support />} />
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/register" element={<Register/>}/>
+
 
         {/* Service detail pages */}
         <Route path="/services/soil" element={<Soil />} />

@@ -8,7 +8,7 @@ const About = () => {
         {/* Left Side - Image */}
         <div className="about-image">
           <img
-            src="./image.jpg"
+            src="./image.png"
             alt="Smart Farming Illustration"
           />
         </div>

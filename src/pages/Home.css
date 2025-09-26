@@ -27,6 +27,14 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+/* Disabled link styling */
+.disabled-link {
+  pointer-events: none; /* click block */
+  opacity: 0.6;        /* semi-transparent */
+  cursor: not-allowed;  /* show not-allowed cursor */
+}
+
 .btn-primary {
   display: inline-block;
   margin-top: 1.5rem;
@@ -252,4 +260,24 @@
 .btn-secondaryr,
 .service-card {
   text-decoration: none;
+}
+
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Tweaks */
+@media (max-width: 768px) {
+  .hero-title { font-size: 2.2rem; }
+  .hero-subtitle { font-size: 1.1rem; }
+  .section-title { font-size: 1.6rem; }
+  .cta h2 { font-size: 1.6rem; }
+  .cta p { font-size: 1rem; }
 }

@@ -12,6 +12,7 @@ const Soil = () => {
     shcFile: null,
   });
   const [result, setResult] = useState(null);
+  const [crops, setCrops] = useState([]);
 
   const fakeAnalysis = [
     { label: "Nitrogen Content", value: "Moderate (55 kg/ha)" },
@@ -26,6 +27,19 @@ const Soil = () => {
     { label: "Micronutrients (Zn, Fe, Mn)", value: "Sufficient" },
   ];
 
+  const suggestedCrops = [
+    "Wheat 🌾",
+    "Rice 🌿",
+    "Maize 🌽",
+    "Sugarcane 🍬",
+    "Soybean 🌱",
+    "Cotton 👕",
+    "Groundnut 🥜",
+    "Mustard 🌻",
+    "Barley 🍺",
+    "Chickpea (Chana) 🧆",
+  ];
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (files) {
@@ -38,6 +52,7 @@ const Soil = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setResult(fakeAnalysis);
+    setCrops(suggestedCrops);
   };
 
   const downloadPDF = () => {
@@ -60,6 +75,11 @@ const Soil = () => {
       doc.text(`${i + 1}. ${item.label}: ${item.value}`, 20, 100 + i * 10);
     });
 
+    doc.text("🌾 Suggested Crops:", 20, 210);
+    crops.forEach((crop, i) => {
+      doc.text(`${i + 1}. ${crop}`, 20, 220 + i * 10);
+    });
+
     doc.save("soil_analysis_report.pdf");
   };
 
@@ -71,7 +91,7 @@ const Soil = () => {
       </h1>
       <p className="text-center text-lg text-gray-600 max-w-2xl mx-auto mb-10">
         Enter your soil details or upload your <strong>Soil Health Card (SHC)</strong> 
-        to get a quick AI-powered soil analysis with recommendations.
+        to get a quick AI-powered soil analysis with crop recommendations.
       </p>
 
       {/* Mode Selection */}
@@ -190,11 +210,11 @@ const Soil = () => {
 
       {/* Results */}
       {result && (
-        <div className="bg-white/95 p-8 rounded-3xl shadow-2xl max-w-3xl mx-auto mt-12 border border-green-300 backdrop-blur-sm">
+        <div className="bg-white/95 p-8 rounded-3xl shadow-2xl max-w-3xl mx-auto mt-12 border border-green-300 backdrop-blur-sm results soil-res">
           <h2 className="text-3xl font-bold text-green-900 mb-6 flex items-center gap-2">
             🧪 Soil Analysis Results
           </h2>
-          <ul className="list-disc pl-6 space-y-2 text-gray-700">
+          <ul className="list-disc pl-6 space-y-2 text-gray-700 soil-result">
             {result.map((item, index) => (
               <li key={index} className="text-lg">
                 <strong>{item.label}:</strong> {item.value}
@@ -202,11 +222,26 @@ const Soil = () => {
             ))}
           </ul>
 
+          {/* Suggested Crops */}
+          <h2 className="text-3xl font-bold text-green-900 mt-10 mb-4 flex items-center gap-2">
+            🌾 Suggested Crops
+          </h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 crop ">
+            {crops.map((crop, i) => (
+              <div
+                key={i}
+                className="p-4 bg-green-50 border border-green-300 rounded-xl text-center shadow hover:shadow-md transition"
+              >
+                {crop}
+              </div>
+            ))}
+          </div>
+
           <button
             onClick={downloadPDF}
             className="mt-8 px-6 py-3 bg-green-700 text-white rounded-lg font-semibold hover:bg-green-800 transition transform hover:scale-105"
           >
-            📥 Download PDF Report
+            📄 Download PDF Report
           </button>
         </div>
       )}

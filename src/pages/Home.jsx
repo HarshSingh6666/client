@@ -1,8 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Home.css"; 
 
 const Home = () => {
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token"); // check login
+
   return (
     <div className="home-container">
       {/* Hero Section */}
@@ -12,7 +15,17 @@ const Home = () => {
           Empowering farmers with AI-driven solutions for soil health, weather
           insights, pest control, market trends, and more.
         </p>
-        <Link to="/services" className="btn-primary">
+        <Link
+          to={token ? "/services" : "#"}
+          className={`btn-primary ${!token ? "disabled-link" : ""}`}
+          onClick={(e) => {
+            if (!token) {
+              e.preventDefault();
+              alert("❌ Please login first!");
+              navigate("/login");
+            }
+          }}
+        >
           Explore Services
         </Link>
       </section>
@@ -22,30 +35,28 @@ const Home = () => {
         <h2 className="section-title">🌱 Our Key Services</h2>
 
         <div className="services-grid">
-          <Link to="/services/soil" className="service-card soil">
-            <h3>Soil Testing</h3>
-            <p>Analyze soil health and get fertilizer recommendations.</p>
-          </Link>
-
-          <Link to="/services/weather" className="service-card weather">
-            <h3>Weather Forecast</h3>
-            <p>Get accurate local weather forecasts for better planning.</p>
-          </Link>
-
-          <Link to="/services/pest" className="service-card pest">
-            <h3>Pest & Disease Detection</h3>
-            <p>Upload or capture crop images to detect pests instantly.</p>
-          </Link>
-
-          <Link to="/services/market" className="service-card market">
-            <h3>Market Prices</h3>
-            <p>Stay updated with real-time mandi prices & trends.</p>
-          </Link>
-{/* 
-          <Link to="/services/chatbot" className="service-card chatbot">
-            <h3>AI Chatbot</h3>
-            <p>Ask questions in your language & get instant advice.</p>
-          </Link> */}
+          {[
+            { path: "/services/soil", title: "Soil Testing", desc: "Analyze soil health and get fertilizer recommendations.", cls: "soil" },
+            { path: "/services/weather", title: "Weather Forecast", desc: "Get accurate local weather forecasts for better planning.", cls: "weather" },
+            { path: "/services/pest", title: "Pest & Disease Detection", desc: "Upload or capture crop images to detect pests instantly.", cls: "pest" },
+            { path: "/services/market", title: "Market Prices", desc: "Stay updated with real-time mandi prices & trends.", cls: "market" },
+          ].map((service, index) => (
+            <Link
+              key={index}
+              to={token ? service.path : "#"}
+              className={`service-card ${service.cls} ${!token ? "disabled-link" : ""}`}
+              onClick={(e) => {
+                if (!token) {
+                  e.preventDefault();
+                  alert("❌ Please login first!");
+                  navigate("/login");
+                }
+              }}
+            >
+              <h3>{service.title}</h3>
+              <p>{service.desc}</p>
+            </Link>
+          ))}
         </div>
       </section>
 
@@ -53,7 +64,17 @@ const Home = () => {
       <section className="cta">
         <h2>Ready to transform your farming?</h2>
         <p>Start using our smart advisory system today.</p>
-        <Link to="/support" className="btn-secondary">
+        <Link
+          to={token ? "/support" : "#"}
+          className={`btn-secondary ${!token ? "disabled-link" : ""}`}
+          onClick={(e) => {
+            if (!token) {
+              e.preventDefault();
+              alert("❌ Please login first!");
+              navigate("/login");
+            }
+          }}
+        >
           Get Support
         </Link>
       </section>

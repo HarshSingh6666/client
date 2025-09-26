@@ -1,0 +1,118 @@
+/* 🔥 Animated Gradient Background */
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(-45deg, #0ee770, #179b49, #00c6ff, #0072ff);
+  background-size: 400% 400%;
+  animation: gradientBG 10s ease infinite;
+  height:800px;
+  
+  
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Glassmorphism Form Box */
+.register-box {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(15px);
+  border-radius: 18px;
+  padding: 35px;
+  width:100rem;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  animation: fadeUp 1s ease forwards;
+  transform: translateY(40px);
+  opacity: 0;
+  color: black;
+
+}
+
+@keyframes fadeUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.register-title {
+  font-size: 26px;
+  font-weight: bold;
+  color: #003d08;
+  margin-bottom: 10px;
+}
+
+.register-subtitle {
+  font-size: 18px;
+  color: #0f5fd6;
+  margin-bottom: 20px;
+}
+
+/* Input Fields */
+.register-input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.18);
+  color: #000000;
+  font-size: 15px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.register-input::placeholder {
+  color: #0f0f0f;
+}
+
+.register-input:focus {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+/* Button */
+.register-btn {
+  width: 100%;
+  padding: 14px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+
+.register-btn:hover {
+  background: linear-gradient(135deg, #0072ff, #00c6ff);
+  box-shadow: 0 0 20px rgba(0, 198, 255, 0.7);
+  transform: translateY(-2px) scale(1.05);
+}
+
+/* Footer */
+.register-footer {
+  margin-top: 20px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.register-footer a {
+  color: #ff0000;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.register-footer a:hover {
+  color: #fff176;
+  text-decoration: underline;
+}

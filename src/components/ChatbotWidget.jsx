@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./ChatbotWidget.css";
 
 const ChatbotWidget = () => {
@@ -7,50 +7,48 @@ const ChatbotWidget = () => {
     { from: "bot", text: "👋 Hello! How can I help you with farming today?" },
   ]);
   const [input, setInput] = useState("");
-  const [isSpeakerOn, setIsSpeakerOn] = useState(true); // 🔊 TTS toggle
+  const [isSpeakerOn, setIsSpeakerOn] = useState(true);
   const recognitionRef = useRef(null);
-  const [isListening, setIsListening] = useState(false); // 🎤 listening state
+  const [isListening, setIsListening] = useState(false);
 
-  // ✅ Text-to-Speech function
-  // ✅ Text-to-Speech function
-const speakText = (text) => {
-  if (!window.speechSynthesis) return;
+  // 👇 yeh ref add kiya
+  const messagesEndRef = useRef(null);
 
-  if (!isSpeakerOn) {
-    window.speechSynthesis.cancel();
-    return;
-  }
+  // ✅ Auto-scroll effect
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
-  window.speechSynthesis.cancel();
+  // ✅ Text-to-Speech function (same as before)
+  const speakText = (text) => {
+    if (!window.speechSynthesis) return;
 
-  const utterance = new SpeechSynthesisUtterance(text);
-
-  // 🔍 Check if Hindi characters exist
-  const hasHindi = /[\u0900-\u097F]/.test(text);
-
-  // ✅ Hindi ke liye hi-IN, English ke liye en-US
-  utterance.lang = hasHindi ? "hi-IN" : "en-US";
-
-  // Voice select karne ka option (browser pe depend karta hai)
-  const voices = window.speechSynthesis.getVoices();
-  if (voices.length > 0) {
-    // Hindi ke liye koi hi-IN voice, warna default
-    if (hasHindi) {
-      const hindiVoice = voices.find((v) => v.lang.includes("hi-IN"));
-      if (hindiVoice) utterance.voice = hindiVoice;
-    } else {
-      const englishVoice = voices.find((v) => v.lang.includes("en-US"));
-      if (englishVoice) utterance.voice = englishVoice;
+    if (!isSpeakerOn) {
+      window.speechSynthesis.cancel();
+      return;
     }
-  }
 
-  utterance.rate = 1;   // speed
-  utterance.pitch = 1;  // tone
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
 
-  window.speechSynthesis.speak(utterance);
-};
+    const hasHindi = /[\u0900-\u097F]/.test(text);
+    utterance.lang = hasHindi ? "hi-IN" : "en-US";
 
+    const voices = window.speechSynthesis.getVoices();
+    if (voices.length > 0) {
+      if (hasHindi) {
+        const hindiVoice = voices.find((v) => v.lang.includes("hi-IN"));
+        if (hindiVoice) utterance.voice = hindiVoice;
+      } else {
+        const englishVoice = voices.find((v) => v.lang.includes("en-US"));
+        if (englishVoice) utterance.voice = englishVoice;
+      }
+    }
 
+    utterance.rate = 1;
+    utterance.pitch = 1;
+    window.speechSynthesis.speak(utterance);
+  };
 
   // ✅ Handle sending message to backend
   const handleSend = async (customInput = null) => {
@@ -61,15 +59,12 @@ const speakText = (text) => {
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
 
-    // Show temporary loading message
     setMessages((prev) => [...prev, { from: "bot", text: "🤖 Thinking..." }]);
 
     try {
-      const res = await fetch("http://localhost:5000/chat", {
+      const res = await fetch("https://krisisaathi-backend.onrender.com/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: finalInput }),
       });
 
@@ -91,7 +86,7 @@ const speakText = (text) => {
     }
   };
 
-  // ✅ Voice Recognition Function
+  // ✅ Voice Recognition Function (same as before)
   const startListening = () => {
     if (!("webkitSpeechRecognition" in window || "SpeechRecognition" in window)) {
       alert("🎤 Speech recognition not supported in this browser.");
@@ -108,54 +103,38 @@ const speakText = (text) => {
 
     recognitionRef.current = recognition;
 
-    recognition.onstart = () => {
-      setIsListening(true);
-    };
-
+    recognition.onstart = () => setIsListening(true);
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
       handleSend(transcript);
     };
-
-    recognition.onerror = (event) => {
-      console.error("Speech Recognition Error:", event.error);
-    };
-
-    recognition.onend = () => {
-      setIsListening(false);
-    };
+    recognition.onerror = (event) => console.error("Speech Recognition Error:", event.error);
+    recognition.onend = () => setIsListening(false);
 
     recognition.start();
   };
 
   return (
     <div className="chatbot-container">
-      {/* Chat Window */}
       {isOpen && (
         <div className="chat-window">
           <div className="chat-header">
             🌱 KrisiSaathi
             <div className="chat-controls">
-              {/* 🔊 Speaker Toggle */}
               <button
-  className="speaker-btn"
-  onClick={() => {
-    setIsSpeakerOn((prev) => {
-      const newState = !prev;
-      if (!newState) {
-        // turant band karo agar off ho gaya
-        window.speechSynthesis.cancel();
-      }
-      return newState;
-    });
-  }}
-  title={isSpeakerOn ? "Speaker On" : "Speaker Off"}
->
-  {isSpeakerOn ? "🔊" : "🔇"}
-</button>
+                className="speaker-btn"
+                onClick={() => {
+                  setIsSpeakerOn((prev) => {
+                    const newState = !prev;
+                    if (!newState) window.speechSynthesis.cancel();
+                    return newState;
+                  });
+                }}
+                title={isSpeakerOn ? "Speaker On" : "Speaker Off"}
+              >
+                {isSpeakerOn ? "🔊" : "🔇"}
+              </button>
 
-
-              {/* 🎤 Voice Input */}
               <button
                 className={`mic-btn ${isListening ? "listening" : ""}`}
                 onClick={startListening}
@@ -164,7 +143,6 @@ const speakText = (text) => {
                 🎤
               </button>
 
-              {/* ❌ Close Chat */}
               <button className="close-btn" onClick={() => setIsOpen(false)}>
                 ✖
               </button>
@@ -180,6 +158,8 @@ const speakText = (text) => {
                 {msg.text}
               </div>
             ))}
+            {/* 👇 Yeh hamesha last me scroll karega */}
+            <div ref={messagesEndRef} />
           </div>
 
           <div className="chat-input-area">
@@ -195,7 +175,6 @@ const speakText = (text) => {
         </div>
       )}
 
-      {/* Floating Toggle Button */}
       <button className="chat-toggle" onClick={() => setIsOpen(!isOpen)}>
         {isOpen ? "−" : "💬"}
       </button>
